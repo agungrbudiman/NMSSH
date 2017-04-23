@@ -295,4 +295,7 @@
  */
 - (BOOL)copyContentsOfPath:(NSString *)fromPath toFileAtPath:(NSString *)toPath progress:(BOOL (^)(NSUInteger copied, NSUInteger totalBytes))progress;
 
+/** Last session error. */
+@property (nonatomic, readonly) NSError *lastError;
+
 @end

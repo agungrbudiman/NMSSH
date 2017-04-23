@@ -521,4 +521,20 @@
     return YES;
 }
 
+// -----------------------------------------------------------------------------
+#pragma mark - Errors
+// -----------------------------------------------------------------------------
+
+- (NSError *)lastError {
+    if(!self.sftpSession) {
+        return [NSError errorWithDomain:@"libssh2_sftp" code:LIBSSH2_ERROR_NONE userInfo:@{NSLocalizedDescriptionKey : @"Error retrieving last sftp error due to absence of an active session."}];
+    }
+    
+    unsigned long error = libssh2_sftp_last_error(self.sftpSession);
+    
+    return [NSError errorWithDomain:@"libssh2_sftp"
+                               code:error
+                           userInfo:nil];
+}
+
 @end

@@ -164,6 +164,28 @@
 - (NSData *)contentsAtPath:(NSString *)path progress:(BOOL (^)(NSUInteger got, NSUInteger totalBytes))progress;
 
 /**
+ Read the contents of a file and write it into provided output stream.
+ 
+ @param path File path to read bytes from
+ @param outputStream stream to write read bytes to
+ @returns Write success
+ */
+- (BOOL)readFileAtPath:(NSString *)path toStream:(NSOutputStream *)outputStream;
+
+/**
+ Refer to readFileAtPath:toStream:
+ 
+ This adds the ability to get periodic updates to bytes read.
+ 
+ @param path File path to read bytes from
+ @param outputStream stream to write read bytes to
+ @param progress Method called periodically with number of bytes read.
+ Returns NO to abort.
+ @returns Write success
+ */
+- (BOOL)readFileAtPath:(NSString *)path toStream:(NSOutputStream *)outputStream progress:(BOOL (^)(NSUInteger, NSUInteger))progress;
+
+/**
  Overwrite the contents of a file
 
  If no file exists, one is created.

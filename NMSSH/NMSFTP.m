@@ -174,18 +174,25 @@
     if (!handle) {
         return nil;
     }
+    
+    NMSFTPFile *file = [self infoForSFTPHandle:handle filename:path.lastPathComponent];
 
-    LIBSSH2_SFTP_ATTRIBUTES fileAttributes;
-    ssize_t rc = libssh2_sftp_fstat(handle, &fileAttributes);
     libssh2_sftp_close(handle);
 
+    return file;
+}
+
+- (NMSFTPFile *)infoForSFTPHandle:(LIBSSH2_SFTP_HANDLE *)handle filename:(NSString *)filename {
+    LIBSSH2_SFTP_ATTRIBUTES fileAttributes;
+    ssize_t rc = libssh2_sftp_fstat(handle, &fileAttributes);
+    
     if (rc < 0) {
         return nil;
     }
-
-    NMSFTPFile *file = [[NMSFTPFile alloc] initWithFilename:path.lastPathComponent];
+    
+    NMSFTPFile *file = [[NMSFTPFile alloc] initWithFilename:filename];
     [file populateValuesFromSFTPAttributes:fileAttributes];
-
+    
     return file;
 }
 
@@ -266,6 +273,70 @@
     }
 
     return [data copy];
+}
+
+- (BOOL)readFileAtPath:(NSString *)path toStream:(NSOutputStream *)outputStream {
+    return [self readFileAtPath:path toStream:outputStream progress:nil];
+}
+
+- (BOOL)readFileAtPath:(NSString *)path toStream:(NSOutputStream *)outputStream progress:(BOOL (^)(NSUInteger, NSUInteger))progress {
+    if ([outputStream streamStatus] == NSStreamStatusNotOpen) {
+        [outputStream open];
+    }
+    
+    if (![outputStream hasSpaceAvailable]) {
+        NMSSHLogWarn(@"No space available in the stream");
+        return NO;
+    }
+    
+    LIBSSH2_SFTP_HANDLE *handle = [self openFileAtPath:path flags:LIBSSH2_FXF_READ mode:0];
+    
+    if (!handle) {
+        [outputStream close];
+        return NO;
+    }
+    
+    BOOL success = [self readSFTPHandle:handle toStream:outputStream progress:progress];
+    
+    libssh2_sftp_close(handle);
+    [outputStream close];
+    
+    return success;
+}
+
+- (BOOL)readSFTPHandle:(LIBSSH2_SFTP_HANDLE *)handle toStream:(NSOutputStream *)outputStream progress:(BOOL (^)(NSUInteger, NSUInteger))progress {
+    NMSFTPFile *file = [self infoForSFTPHandle:handle filename:@""];
+    if (!file) {
+        NMSSHLogWarn(@"readSFTPHandle:toStream:progress: failed to get file attributes");
+        return NO;
+    }
+    NSUInteger fileSize = (NSUInteger)[file.fileSize integerValue];
+    
+    char buffer[self.bufferSize];
+    ssize_t rc;
+    NSInteger bytesWritten = -1;
+    NSUInteger got = 0;
+    while ((rc = libssh2_sftp_read(handle, buffer, (ssize_t)sizeof(buffer))) > 0) {
+        uint8_t *ptr = (uint8_t *)buffer;
+        do {
+            bytesWritten = [outputStream write:ptr maxLength:rc];
+            got += bytesWritten;
+            ptr += bytesWritten;
+            rc -= bytesWritten;
+            
+            if (progress && !progress(got, fileSize)) {
+                return NO;
+            }
+        
+        }while(rc);
+    }
+    
+    if (rc < 0 || bytesWritten < 0) {
+        return NO;
+    }
+    
+    return YES;
+
 }
 
 - (BOOL)writeContents:(NSData *)contents toFileAtPath:(NSString *)path {

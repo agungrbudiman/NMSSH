@@ -551,8 +551,6 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SDKROOT)/usr/lib/system",
-					"$(SRCROOT)/NMSSH-OSX/Libraries/lib",
-					"$(PROJECT_DIR)/NMSSH-OSX/Libraries/lib",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "se.ninemuses.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -578,8 +576,6 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SDKROOT)/usr/lib/system",
-					"$(SRCROOT)/NMSSH-OSX/Libraries/lib",
-					"$(PROJECT_DIR)/NMSSH-OSX/Libraries/lib",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "se.ninemuses.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";

@@ -47,6 +47,20 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		8472F4941EC8EF730028627C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8472F4901EC8EF730028627C /* LibSSH2.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 84BEF7201E660E2600D839D3;
+			remoteInfo = ssh2;
+		};
+		8472F4961EC8EF7C0028627C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8472F4901EC8EF730028627C /* LibSSH2.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 84BEF71F1E660E2600D839D3;
+			remoteInfo = ssh2;
+		};
 		E4E96DA0158E10FD002E6E0A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = E4E96D7A158E10FD002E6E0A /* Project object */;
@@ -88,6 +102,7 @@
 		845BC6AB1E68C34400DC9B81 /* libcrypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcrypto.a; path = "../../../../Library/Developer/Xcode/DerivedData/Soduto-cdxpjilbicnepcgaufsppljyycck/Build/Products/Debug/libcrypto.a"; sourceTree = "<group>"; };
 		845BC6AD1E68C34B00DC9B81 /* libssh2.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libssh2.a; path = "../../../../Library/Developer/Xcode/DerivedData/Soduto-cdxpjilbicnepcgaufsppljyycck/Build/Products/Debug/libssh2.a"; sourceTree = "<group>"; };
 		845BC6C11E68C3DE00DC9B81 /* libssl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libssl.a; path = "../../../../Library/Developer/Xcode/DerivedData/Soduto-cdxpjilbicnepcgaufsppljyycck/Build/Products/Debug/libssl.a"; sourceTree = "<group>"; };
+		8472F4901EC8EF730028627C /* LibSSH2.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = LibSSH2.xcodeproj; path = ../LibSSH2/LibSSH2.xcodeproj; sourceTree = "<group>"; };
 		A6AE1EB9191C7B5800780C19 /* NMSSHConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NMSSHConfig.h; sourceTree = "<group>"; };
 		A6AE1EBA191C7B5800780C19 /* NMSSHConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NMSSHConfig.m; sourceTree = "<group>"; };
 		A6AE1EBD191C835900780C19 /* NMSSHConfigTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NMSSHConfigTests.m; sourceTree = "<group>"; };
@@ -134,8 +149,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				845BC6C21E68C3DE00DC9B81 /* libssl.a in Frameworks */,
-				845BC6AE1E68C34B00DC9B81 /* libssh2.a in Frameworks */,
 				845BC6AC1E68C34400DC9B81 /* libcrypto.a in Frameworks */,
+				845BC6AE1E68C34B00DC9B81 /* libssh2.a in Frameworks */,
 				E4E96D88158E10FD002E6E0A /* Cocoa.framework in Frameworks */,
 				E4D99AA415DE15B300EB5615 /* libz.dylib in Frameworks */,
 			);
@@ -154,6 +169,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		8472F4911EC8EF730028627C /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				8472F4951EC8EF730028627C /* libssh2.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		E49AA6DA17228C25007101A4 /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
@@ -166,6 +189,7 @@
 		E4E96D78158E10FD002E6E0A = {
 			isa = PBXGroup;
 			children = (
+				8472F4901EC8EF730028627C /* LibSSH2.xcodeproj */,
 				E4E96D8D158E10FD002E6E0A /* NMSSH */,
 				E4E96DA3158E10FD002E6E0A /* NMSSHTests */,
 				E4E96D86158E10FD002E6E0A /* Frameworks */,
@@ -332,6 +356,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				8472F4971EC8EF7C0028627C /* PBXTargetDependency */,
 			);
 			name = NMSSH;
 			productName = NMSSH;
@@ -377,6 +402,12 @@
 			mainGroup = E4E96D78158E10FD002E6E0A;
 			productRefGroup = E4E96D85158E10FD002E6E0A /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 8472F4911EC8EF730028627C /* Products */;
+					ProjectRef = 8472F4901EC8EF730028627C /* LibSSH2.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				E4E96D83158E10FD002E6E0A /* NMSSH */,
@@ -384,6 +415,16 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		8472F4951EC8EF730028627C /* libssh2.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libssh2.a;
+			remoteRef = 8472F4941EC8EF730028627C /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		E4E96D82158E10FD002E6E0A /* Resources */ = {
@@ -453,6 +494,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		8472F4971EC8EF7C0028627C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = ssh2;
+			targetProxy = 8472F4961EC8EF7C0028627C /* PBXContainerItemProxy */;
+		};
 		E4E96DA1158E10FD002E6E0A /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = E4E96D83158E10FD002E6E0A /* NMSSH */;
@@ -554,6 +600,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "se.ninemuses.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
 				WRAPPER_EXTENSION = framework;
 			};
 			name = Debug;
@@ -579,6 +626,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "se.ninemuses.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
 				WRAPPER_EXTENSION = framework;
 			};
 			name = Release;
